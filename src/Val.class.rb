@@ -13,9 +13,27 @@ end
 Bool = new { OR[true, false] }
 
 def initialize &block
-  @type = instance_exec &block
+  @conditions = []
+  if condition = (instance_exec &block)
+    @conditions << condition
+  end
+end
+
+class Key
+  def initialize name
+    @name = name
+  end
+
+  def === value
+    value.respond_to?(:[]) && value[@name]
+  end
+end
+
+def key name
+  @conditions << Key.new(name)
+  nil
 end
 
 def === value
-  @type === value
+  @conditions.all? &[:===, value]
 end
