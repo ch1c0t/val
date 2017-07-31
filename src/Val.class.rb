@@ -10,8 +10,6 @@ def OR *all
   OR[*all]
 end
 
-Bool = new { OR[true, false] }
-
 def initialize &block
   @conditions = []
   if condition = (instance_exec &block)
@@ -20,20 +18,30 @@ def initialize &block
 end
 
 class Key
-  def initialize name
-    @name = name
+  def initialize name, type
+    @name, @type = name, type
   end
 
   def === value
-    value.respond_to?(:[]) && value[@name]
+    value.respond_to?(:[]) && value[@name] && valid_type?(value[@name])
+  end
+
+  def valid_type? name
+    if @type
+      @type === name
+    else
+      true
+    end
   end
 end
 
-def key name
-  @conditions << Key.new(name)
+def key name, type = nil
+  @conditions << Key.new(name, type)
   nil
 end
 
 def === value
   @conditions.all? &[:===, value]
 end
+
+Bool = new { OR[true, false] }

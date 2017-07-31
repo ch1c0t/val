@@ -35,4 +35,23 @@ describe 'Val#===' do
       assert { not @val === hash_without_b }
     end
   end
+
+  describe 'types of keys' do
+    before do
+      @val = Val.new do
+        key :name, String
+        key :valid?, Bool
+      end
+    end
+
+    it do
+      hash = { name: 'A', valid?: true }
+      assert { @val === hash }
+    end
+
+    it do
+      hash = { name: 'A', valid?: Object.new }
+      assert { not @val === hash }
+    end
+  end
 end
