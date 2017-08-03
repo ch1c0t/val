@@ -17,8 +17,24 @@ def initialize &block
   end
 end
 
-def key name, type = nil
-  @conditions << Key.new(name, type)
+def key name, *conditions
+  first = conditions.first
+
+  if first.is_a?(Module) || first.is_a?(Val) || first.equal?(nil)
+    type = first
+    @conditions << Key.new(name, type)
+  else
+    @conditions.concat conditions.map { |condition|
+      -> value {
+        begin
+          condition.to_proc === value[name] 
+        rescue ArgumentError
+          false
+        end
+      }
+    }
+  end
+
   nil
 end
 

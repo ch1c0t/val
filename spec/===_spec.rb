@@ -70,4 +70,39 @@ describe 'Val#===' do
       assert { not @val === :not_string }
     end
   end
+
+  describe 'conditions in arrays' do
+    before do
+      @val = Val.new do
+        key 0, [:<, 44], [:>, 41]
+        key 1, [:==, 0]
+      end
+    end
+
+    it do
+      a, b = [42, 0], [43, 0]
+      assert { @val === a }
+      assert { @val === b }
+    end
+
+    it do
+      a = [40, 0]
+      assert { not @val === a }
+    end
+
+    it do
+      a = [42, 2]
+      assert { not @val === a }
+    end
+
+    it do
+      a = [42]
+      assert { not @val === a }
+    end
+
+    it do
+      a = [:not, :int]
+      assert { not @val === a }
+    end
+  end
 end
