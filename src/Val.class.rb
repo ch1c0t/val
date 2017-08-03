@@ -22,6 +22,12 @@ def key name, type = nil
   nil
 end
 
+def is_a type
+  condition = -> value { value.is_a? type }
+  @conditions << condition
+  nil
+end
+
 def === value
   @conditions.all? &[:===, value]
 end

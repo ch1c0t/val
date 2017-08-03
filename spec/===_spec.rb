@@ -54,4 +54,20 @@ describe 'Val#===' do
       assert { not @val === hash }
     end
   end
+
+  describe 'Val#is_a' do
+    before do
+      @val = Val.new do
+        is_a String
+      end
+    end
+
+    it do
+      assert { @val === 'string' }
+    end
+
+    it do
+      assert { not @val === :not_string }
+    end
+  end
 end
