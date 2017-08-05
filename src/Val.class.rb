@@ -22,7 +22,7 @@ end
 def key name, *conditions
   first = conditions.first
 
-  if first.is_a?(Module) || first.is_a?(Val) || first.equal?(nil)
+  if [Module, Val, NilClass].any? &[first, :is_a?]
     type = first
     @conditions << Key.new(name, type)
   else
