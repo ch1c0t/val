@@ -12,7 +12,9 @@ end
 
 def initialize &block
   @conditions = []
-  if condition = (instance_exec &block)
+  result = instance_exec &block
+  if @conditions.empty?
+    condition = result
     @conditions << condition
   end
 end
@@ -34,14 +36,11 @@ def key name, *conditions
       }
     }
   end
-
-  nil
 end
 
 def is_a type
   condition = -> value { value.is_a? type }
   @conditions << condition
-  nil
 end
 
 def === value
