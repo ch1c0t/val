@@ -26,14 +26,8 @@ def key name, *conditions
     type = first
     @conditions << Key.new(name, type)
   else
-    @conditions.concat conditions.map { |condition|
-      -> value {
-        begin
-          condition.to_proc === value[name] 
-        rescue ArgumentError
-          false
-        end
-      }
+    @conditions.concat conditions.map { |array|
+      ArrayCondition.new name, array
     }
   end
 end
