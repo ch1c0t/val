@@ -1,7 +1,7 @@
 Gem::Specification.new do |g|
   g.name    = 'val'
   g.files   = 'lib/val.rb'
-  g.version = '0.0.0'
+  g.version = '0.0.1'
   g.summary = 'Validate values of Ruby objects.'
   g.authors = ['Anatoly Chernow']
 
