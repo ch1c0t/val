@@ -19,6 +19,10 @@ def initialize &block
   end
 end
 
+def val &block
+  self.class.new &block
+end
+
 def key name, *conditions
   first = conditions.first
 

@@ -105,4 +105,33 @@ describe 'Val#===' do
       assert { not @val === a }
     end
   end
+
+  describe 'Val#val helper' do
+    before do
+      @val = Val.new do
+        key :request, Hash
+        key :response, val {
+          is_a Hash
+          key :due, Hash
+          key :got, Hash
+        }
+      end
+    end
+
+    it do
+      value = {
+        request: {},
+        response: {
+          due: {},
+          got: {}
+        }
+      }
+      assert { @val === value }
+    end
+
+    it do
+      value = {}
+      assert { not @val === value }
+    end
+  end
 end
