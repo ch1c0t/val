@@ -134,4 +134,28 @@ describe 'Val#===' do
       assert { not @val === value }
     end
   end
+
+  describe 'Val#is' do
+    before do
+      @val = Val.new do
+        is_a Range
+        is [:include?, 2]
+      end
+    end
+
+    it do
+      range = 1..3
+      assert { @val === range }
+    end
+
+    it do
+      range = 3..4
+      assert { not @val === range }
+    end
+
+    it do
+      not_range = 'string'
+      assert { not @val === not_range }
+    end
+  end
 end

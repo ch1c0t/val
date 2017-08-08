@@ -41,6 +41,13 @@ def is_a type
   @conditions << condition
 end
 
+def is array
+  condition = -> value {
+    array.to_proc === value
+  }
+  @conditions << condition
+end
+
 def === value
   @conditions.all? &[:===, value]
 end
