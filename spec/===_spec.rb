@@ -138,8 +138,8 @@ describe 'Val#===' do
   describe 'Val#is' do
     before do
       @val = Val.new do
-        is_a Range
         is [:include?, 2]
+        is_a Range
       end
     end
 
@@ -156,6 +156,12 @@ describe 'Val#===' do
     it do
       not_range = 'string'
       assert { not @val === not_range }
+    end
+
+    it do
+      object = Object.new
+      def object.include?; true; end
+      assert { not @val === object }
     end
   end
 end

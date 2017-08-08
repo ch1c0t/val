@@ -43,7 +43,11 @@ end
 
 def is array
   condition = -> value {
-    array.to_proc === value
+    begin
+      array.to_proc === value
+    rescue TypeError, ArgumentError
+      false
+    end
   }
   @conditions << condition
 end
