@@ -164,4 +164,22 @@ describe 'Val#===' do
       assert { not @val === object }
     end
   end
+
+  describe 'argumentless methods' do
+    before do
+      @val = Val.new do
+        m :[]
+      end
+    end
+
+    it do
+      [[], "", {}].each do |object|
+        assert { @val === object }
+      end
+    end
+
+    it do
+      assert { not @val === Object.new }
+    end
+  end
 end

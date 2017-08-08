@@ -52,6 +52,13 @@ def is array
   @conditions << condition
 end
 
+def m name
+  condition = -> value {
+    value.respond_to? name
+  }
+  @conditions << condition
+end
+
 def === value
   @conditions.all? &[:===, value]
 end
