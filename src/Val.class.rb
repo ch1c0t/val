@@ -1,13 +1,7 @@
 require 'to_proc/all'
 
-OR = -> *values do
-  -> value do
-    values.any? &[:===, value]
-  end
-end
-
 def OR *all
-  OR[*all]
+  Op::OR[*all]
 end
 
 def initialize &block
@@ -63,4 +57,4 @@ def === value
   @conditions.all? &[:===, value]
 end
 
-Bool = new { OR[true, false] }
+Bool = new { OR(true, false) }
