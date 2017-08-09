@@ -15,4 +15,14 @@ def === value
   @conditions.all? &[:===, value]
 end
 
+def [] value
+  report = Report.new
+
+  if self === value
+    report.ok = true
+  end
+
+  report
+end
+
 Bool = new { OR(true, false) }
