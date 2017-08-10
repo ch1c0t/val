@@ -1,5 +1,5 @@
 def OR *all
-  Op::OR[*all]
+  @conditions << Op::OR[*all]
 end
 
 def val &block
@@ -7,14 +7,11 @@ def val &block
 end
 
 def key name, *conditions
-  first = conditions.first
-
-  if [Module, Val, NilClass].any? &[first, :is_a?]
-    type = first
-    @conditions << Key.new(name, type)
+  if conditions.empty?
+    @keys << Key::Presence.new(name)
   else
-    @conditions.concat conditions.map { |array|
-      ArrayCondition.new name, array
+    @keys.concat conditions.map { |condition|
+      Key.new name, condition
     }
   end
 end
@@ -36,8 +33,5 @@ def is array
 end
 
 def m name
-  condition = -> value {
-    value.respond_to? name
-  }
-  @conditions << condition
+  @messages << Message.new(name)
 end

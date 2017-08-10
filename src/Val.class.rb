@@ -3,26 +3,21 @@ require 'to_proc/all'
 include DSL
 
 def initialize &block
-  @conditions = []
-  result = instance_exec &block
-  if @conditions.empty?
-    condition = result
-    @conditions << condition
-  end
+  @conditions, @messages, @keys = [], [], []
+  instance_exec &block
+end
+
+attr_reader :messages, :keys
+def conditions
+  [*@conditions, *@messages, *@keys]
 end
 
 def === value
-  @conditions.all? &[:===, value]
+  conditions.all? &[:===, value]
 end
 
 def [] value
-  report = Report.new
-
-  if self === value
-    report.ok = true
-  end
-
-  report
+  Report.new self, value
 end
 
 Bool = new { OR(true, false) }

@@ -28,9 +28,9 @@ describe Val::Report do
       report = val[object]
 
       assert { not report.ok? }
-      assert { report.missing_keys.empty? }
+      assert { report.missing_keys == [0, 1] }
       assert { report.present_keys.empty? }
-      assert { report.missing_methods = [:[]] }
+      assert { report.missing_messages == [:[]] }
     end
   end
 end
