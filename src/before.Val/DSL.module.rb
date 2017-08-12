@@ -7,6 +7,8 @@ def val &block
 end
 
 def key name, *conditions
+  m :[]
+
   if conditions.empty?
     @keys[name] = Key::Presence.new name
   else
