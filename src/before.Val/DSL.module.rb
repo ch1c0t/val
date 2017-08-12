@@ -8,10 +8,10 @@ end
 
 def key name, *conditions
   if conditions.empty?
-    @keys << Key::Presence.new(name)
+    @keys[name] = Key::Presence.new name
   else
-    @keys.concat conditions.map { |condition|
-      Key.new name, condition
+    conditions.each { |condition|
+      @keys[name] = Key.new name, condition
     }
   end
 end
@@ -33,5 +33,5 @@ def is array
 end
 
 def m name
-  @messages << Message.new(name)
+  @messages[name] = Message.new name
 end

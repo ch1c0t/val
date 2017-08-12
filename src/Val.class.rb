@@ -3,13 +3,13 @@ require 'to_proc/all'
 include DSL
 
 def initialize &block
-  @conditions, @messages, @keys = [], [], []
+  @conditions, @messages, @keys = [], {}, {}
   instance_exec &block
 end
 
 attr_reader :messages, :keys
 def assertions
-  [*@conditions, *@messages, *@keys]
+  [*@conditions, *@messages.values, *@keys.values]
 end
 
 def === value
