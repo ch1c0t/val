@@ -17,7 +17,7 @@ def === value
 end
 
 def [] value
-  Report.new self, value
+  Instance.new self, value
 end
 
 Bool = new { OR(true, false) }

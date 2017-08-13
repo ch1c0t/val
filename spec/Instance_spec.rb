@@ -1,6 +1,6 @@
 require_relative 'helper'
 
-describe Val::Report do
+describe Val::Instance do
   describe 'basic' do
     let(:val) {
       Val.new do
