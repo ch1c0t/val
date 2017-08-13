@@ -10,14 +10,10 @@ def initialize type, value
   @type, @value = type, value
 end
 
-attr_reader :type, :value
+attr_reader :claims, :type, :value
 
 def key key
   @keys[key]
-end
-
-def error
-  @claims.first.error
 end
 
 def ok?

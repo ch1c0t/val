@@ -14,14 +14,14 @@ describe Val::Claim do
       instance = @val[object]
 
       assert { not instance.ok? }
-      assert { instance.error.is_a? ArgumentError }
+      assert { instance.claims.first.error.is_a? ArgumentError }
     end
 
     it do
       instance = @val['string']
 
       assert { not instance.ok? }
-      assert { instance.error.is_a? TypeError }
+      assert { instance.claims.first.error.is_a? TypeError }
     end
   end
 
