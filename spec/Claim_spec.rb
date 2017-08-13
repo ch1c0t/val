@@ -24,4 +24,12 @@ describe Val::Claim do
       assert { instance.error.is_a? TypeError }
     end
   end
+
+  describe '#to_a' do
+    val = Val.new do
+      is [:include?, 5]
+    end
+
+    assert { val.claims.first.to_a == [:include?, 5] }
+  end
 end

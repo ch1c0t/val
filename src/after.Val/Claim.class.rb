@@ -1,9 +1,14 @@
 def initialize array
+  @array = array
   @proc = array.to_proc
 end
 
 def proc
   @proc
+end
+
+def to_a
+  @array
 end
 
 def === value
