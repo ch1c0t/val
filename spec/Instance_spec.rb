@@ -33,4 +33,24 @@ describe Val::Instance do
       assert { report.missing_messages == [:[]] }
     end
   end
+
+  describe 'keys' do
+    before do
+      @val = Val.new do
+        key :name, String
+        key :valid?, Bool
+      end
+    end
+
+    it do
+      hash = { name: 'A', valid?: true }
+      instance = @val[hash]
+      assert { instance.ok? }
+
+      value = instance.key(:valid?).value
+      type = instance.key(:valid?).type
+      assert { value == true }
+      assert { type == Bool }
+    end
+  end
 end

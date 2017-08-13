@@ -10,6 +10,7 @@ attr_reader :name
 
 def initialize name, condition = nil
   @name, @condition = name, condition
+  @keys, @messages = {}, {}
 end
 
 def === value
@@ -18,4 +19,11 @@ end
 
 def valid? _value
   true
+end
+
+
+attr_reader :keys, :messages
+
+def [] value
+  Instance.new self, value
 end
