@@ -1,6 +1,9 @@
 def initialize type, value
   @ok = type === value
 
+  if type.respond_to? :claims
+    @claims = type.claims.map &[value]
+  end
   @keys = type.keys.transform_values &[value]
   @messages = type.messages.transform_values &[value]
 
@@ -11,6 +14,10 @@ attr_reader :type, :value
 
 def key key
   @keys[key]
+end
+
+def error
+  @claims.first.error
 end
 
 def ok?

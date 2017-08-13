@@ -1,6 +1,6 @@
 def initialize name
   @name = name
-  @keys, @messages = {}, {}
+  @claims, @keys, @messages = [], {}, {}
 end
 
 attr_reader :name
@@ -10,7 +10,7 @@ def === value
 end
 
 
-attr_reader :keys, :messages
+attr_reader :claims, :keys, :messages
 
 def [] value
   Instance.new self, value

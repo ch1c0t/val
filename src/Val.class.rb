@@ -8,12 +8,12 @@ def initialize &block
 end
 
 attr_reader :messages, :keys
-def assertions
+def claims
   [*@conditions, *@messages.values, *@keys.values]
 end
 
 def === value
-  assertions.all? &[:===, value]
+  claims.all? &[:===, value]
 end
 
 def [] value
