@@ -24,14 +24,7 @@ def is_a type
 end
 
 def is array
-  condition = -> value {
-    begin
-      array.to_proc === value
-    rescue TypeError, ArgumentError
-      false
-    end
-  }
-  @conditions << condition
+  @conditions << Claim.new(array)
 end
 
 def m name
