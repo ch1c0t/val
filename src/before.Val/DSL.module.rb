@@ -19,8 +19,7 @@ def key name, *conditions
 end
 
 def is_a type
-  condition = -> value { value.is_a? type }
-  @conditions << condition
+  is [:is_a?, type]
 end
 
 def is array
