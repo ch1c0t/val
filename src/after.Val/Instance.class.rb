@@ -4,8 +4,6 @@ def initialize type, value
   if type.respond_to? :claims
     @claims = type.claims.map &[value]
   end
-  @keys = type.keys.transform_values &[value]
-  @messages = type.messages.transform_values &[value]
 
   @type, @value = type, value
 end
@@ -13,7 +11,7 @@ end
 attr_reader :claims, :type, :value
 
 def key key
-  @keys[key]
+  keys[key]
 end
 
 def ok?
@@ -21,18 +19,26 @@ def ok?
 end
 
 
+def keys
+  @keys ||= type.keys.transform_values &[value]
+end
+
+def messages
+  @messages ||= type.messages.transform_values &[value]
+end
+
 def present_keys
-  @present_keys ||= @keys.select{|_,v|v.ok?}.to_h.keys
+  @present_keys ||= keys.select{|_,v|v.ok?}.to_h.keys
 end
 
 def missing_keys
-  @missing_keys ||= @keys.reject{|_,v|v.ok?}.to_h.keys
+  @missing_keys ||= keys.reject{|_,v|v.ok?}.to_h.keys
 end
 
 def present_messages
-  @present_messages ||= @messages.select{|_,v|v.ok?}.to_h.keys
+  @present_messages ||= messages.select{|_,v|v.ok?}.to_h.keys
 end
 
 def missing_messages
-  @missing_messages ||= @messages.reject{|_,v|v.ok?}.to_h.keys
+  @missing_messages ||= messages.reject{|_,v|v.ok?}.to_h.keys
 end
