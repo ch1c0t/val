@@ -12,9 +12,7 @@ def to_a
 end
 
 def === value
-  @proc === value
-rescue
-  false
+  self[value].ok?
 end
 
 def [] value
