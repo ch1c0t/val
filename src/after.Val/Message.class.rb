@@ -1,17 +1,23 @@
 def initialize name
   @name = name
-  @claims, @keys, @messages = [], {}, {}
 end
 
 attr_reader :name
 
 def === value
-  value.respond_to? @name
+  self[value].ok?
 end
-
-
-attr_reader :claims, :keys, :messages
 
 def [] value
   Instance.new self, value
+end
+
+class Instance
+  def initialize type, value
+    @ok = value.respond_to? type.name
+  end
+
+  def ok?
+    @ok
+  end
 end
