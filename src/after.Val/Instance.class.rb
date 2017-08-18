@@ -33,10 +33,12 @@ private
     instances = @claims.grep type
     plural_name = "#{type.name.split('::')[1].downcase}s"
 
-    instance_variable_set :"@#{plural_name}",
-      instances.map { |instance| [instance.name, instance] }.to_h
+    unless instances.empty?
+      instance_variable_set :"@#{plural_name}",
+        instances.map { |instance| [instance.name, instance] }.to_h
 
-    present_instances, missing_instances = instances.partition &:ok?
-    instance_variable_set :"@present_#{plural_name}", present_instances.map(&:name)
-    instance_variable_set :"@missing_#{plural_name}", missing_instances.map(&:name)
+      present_instances, missing_instances = instances.partition &:ok?
+      instance_variable_set :"@present_#{plural_name}", present_instances.map(&:name)
+      instance_variable_set :"@missing_#{plural_name}", missing_instances.map(&:name)
+    end
   end
