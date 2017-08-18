@@ -6,24 +6,37 @@ def self.new name, condition
   end
 end
 
-attr_reader :name
+attr_reader :name, :condition
 
 def initialize name, condition = nil
   @name, @condition = name, condition
-  @keys, @messages = {}, {}
 end
 
 def === value
-  value.respond_to?(:[]) && value[@name] && valid?(value[@name])
+  self[value].ok?
 end
 
-def valid? _value
-  true
+def valid? value
+  !!value
 end
-
-
-attr_reader :keys, :messages
 
 def [] value
   Instance.new self, value
+end
+
+class Instance
+  attr_reader :type, :value, :error
+
+  def initialize type, value
+    @value = value[type.name]
+    @ok = type.valid? @value
+    @type = type.condition
+  rescue
+    @error = $!
+    @ok = false
+  end
+
+  def ok?
+    @ok
+  end
 end
