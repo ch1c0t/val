@@ -25,10 +25,11 @@ def [] value
 end
 
 class Instance
-  attr_reader :type, :value, :error
+  attr_reader :type, :name, :value, :error
 
   def initialize type, value
-    @value = value[type.name]
+    @name = type.name
+    @value = value[@name]
     @ok = type.valid? @value
     @type = type.condition
   rescue

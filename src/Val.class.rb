@@ -3,14 +3,11 @@ require 'to_proc/all'
 include DSL
 
 def initialize &block
-  @conditions, @messages, @keys = [], {}, {}
+  @claims = []
   instance_exec &block
 end
 
-attr_reader :messages, :keys
-def claims
-  [*@conditions, *@messages.values, *@keys.values]
-end
+attr_reader :claims
 
 def === value
   claims.all? &[:===, value]

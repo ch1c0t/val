@@ -55,12 +55,13 @@ end
 
 class Instance
   def initialize type, value
-    @available = value.respond_to? type.name
+    @name = type.name
+    @available = value.respond_to? @name
     @arrows = type.arrows.map &[value]
     @ok = @available && @arrows.all?(&:ok?)
   end
 
-  attr_reader :arrows
+  attr_reader :name, :arrows
 
   def available?
     @available

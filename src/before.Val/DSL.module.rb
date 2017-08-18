@@ -1,5 +1,5 @@
 def OR *all
-  @conditions << Op::OR[*all]
+  @claims << Op::OR[*all]
 end
 
 def val &block
@@ -7,13 +7,14 @@ def val &block
 end
 
 def key name, *conditions
-  m :[]
+  m :[] unless @is_first_key
+  @is_first_key ||= true
 
   if conditions.empty?
-    @keys[name] = Key::Presence.new name
+    @claims << Key::Presence.new(name)
   else
     conditions.each { |condition|
-      @keys[name] = Key.new name, condition
+      @claims << Key.new(name, condition)
     }
   end
 end
@@ -23,10 +24,11 @@ def is_a type
 end
 
 def is array
-  @conditions << Claim.new(array)
+  @claims << Claim.new(array)
 end
 
 def m name, &block
-  @messages[name] ||= Message.new name
-  @messages[name].instance_exec &block if block_given?
+  message = Message.new name
+  message.instance_exec &block if block_given?
+  @claims << message
 end
