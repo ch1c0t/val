@@ -26,6 +26,7 @@ def is array
   @conditions << Claim.new(array)
 end
 
-def m name
-  @messages[name] = Message.new name
+def m name, &block
+  @messages[name] ||= Message.new name
+  @messages[name].instance_exec &block if block_given?
 end

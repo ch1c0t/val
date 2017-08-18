@@ -10,6 +10,10 @@ end
 
 attr_reader :claims, :type, :value
 
+def m name
+  messages[name]
+end
+
 def key key
   keys[key]
 end
