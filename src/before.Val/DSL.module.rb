@@ -7,9 +7,6 @@ def val &block
 end
 
 def key name, *conditions
-  m :[] unless @is_first_key
-  @is_first_key ||= true
-
   if conditions.empty?
     @claims << Key::Presence.new(name)
   else
