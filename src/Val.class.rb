@@ -18,3 +18,4 @@ def [] value
 end
 
 Bool = new { OR(true, false) }
+NotNil = new { NOT :nil? }

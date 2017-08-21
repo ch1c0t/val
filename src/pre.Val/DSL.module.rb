@@ -2,6 +2,10 @@ def OR *all
   @claims << Op::OR[*all]
 end
 
+def NOT question
+  @claims << Op::NOT[question]
+end
+
 def val &block
   self.class.new &block
 end
