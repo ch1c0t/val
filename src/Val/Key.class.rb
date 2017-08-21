@@ -8,16 +8,16 @@ def === value
   self[value].ok?
 end
 
-def [] value
-  Instance.new self, value
+def [] it
+  Instance.new self, it
 end
 
 class Instance
   attr_reader :type, :name, :value, :error
 
-  def initialize type, value
-    @name, @type = type.name, type.type
-    @value = value[@name]
+  def initialize key, it
+    @name, @type = key.name, key.type
+    @value = it[@name]
 
     @ok = @type === @value
   rescue
