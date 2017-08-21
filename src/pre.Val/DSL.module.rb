@@ -11,13 +11,10 @@ def val &block
 end
 
 def key name, *conditions
-  if conditions.empty?
-    @claims << Key::Presence.new(name)
-  else
-    conditions.each { |condition|
-      @claims << Key.new(name, condition)
-    }
-  end
+  conditions = [NotNil] if conditions.empty?
+  conditions.each { |condition|
+    @claims << Key.new(name, condition)
+  }
 end
 
 def is_a type
