@@ -4,10 +4,14 @@ include DSL
 
 def initialize &block
   @claims = []
-  instance_exec &block
+  instance_exec &block if block_given?
 end
 
 attr_reader :claims
+
+def to_val
+  self
+end
 
 def === value
   claims.all? &[:===, value]
