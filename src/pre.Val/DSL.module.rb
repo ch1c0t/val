@@ -12,9 +12,7 @@ end
 
 def key name, *conditions
   conditions = [NotNil] if conditions.empty?
-  conditions.each { |condition|
-    @claims << Key.new(name, condition)
-  }
+  @claims += conditions.map { |condition| Key.new name, condition }
 end
 
 def is_a type
