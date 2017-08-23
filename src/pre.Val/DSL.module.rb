@@ -1,9 +1,11 @@
-def OR *all
-  @claims << Op::OR[*all]
+def OR *values
+  claim = -> it { values.any? &[:===, it] }
+  @claims << claim
 end
 
 def NOT question
-  @claims << Op::NOT[question]
+  claim = -> it { not it.send question }
+  @claims << claim
 end
 
 def val &block
