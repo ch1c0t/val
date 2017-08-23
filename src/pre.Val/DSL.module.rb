@@ -1,3 +1,22 @@
+def val &block
+  self.class.new &block
+end
+
+
+def is array
+  @claims << Claim.new(array)
+end
+
+def is_a type
+  is [:is_a?, type]
+end
+
+def key name, *conditions
+  conditions = [NotNil] if conditions.empty?
+  @claims += conditions.map { |condition| Key.new name, condition }
+end
+
+
 def OR *values
   claim = -> it { values.any? &[:===, it] }
   @claims << claim
@@ -8,22 +27,6 @@ def NOT question
   @claims << claim
 end
 
-def val &block
-  self.class.new &block
-end
-
-def key name, *conditions
-  conditions = [NotNil] if conditions.empty?
-  @claims += conditions.map { |condition| Key.new name, condition }
-end
-
-def is_a type
-  is [:is_a?, type]
-end
-
-def is array
-  @claims << Claim.new(array)
-end
 
 def m name, &block
   message = Message.new name
