@@ -50,6 +50,11 @@ describe Val::Instance do
       type = instance.key(:valid?).type
       assert { value == true }
       assert { type == Bool }
+
+      value = instance.key(:name).value
+      type = instance.key(:name).type
+      assert { value == 'A' }
+      assert { type.claims.first.to_a == [String, :===] }
     end
   end
 end
